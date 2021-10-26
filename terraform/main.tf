@@ -18,7 +18,7 @@ resource "aws_security_group" "app_firewall" {
   vpc_id      = data.aws_vpc.default_vpc.id
 }
 
-resource "aws_security_group_rule" "allow_app_servers" {
+resource "aws_security_group_rule" "ssh_rules" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
@@ -27,19 +27,39 @@ resource "aws_security_group_rule" "allow_app_servers" {
   security_group_id = aws_security_group.app_firewall.id
 }
 
+resource "aws_security_group_rule" "http_rule" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.app_firewall.id
+}
+
+resource "aws_security_group_rule" "https_rule" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.app_firewall.id
+}
+
+resource "aws_security_group_rule" "egress_rule" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.app_firewall.id
+}
+
 resource "aws_instance" "app_server" {
   ami = data.aws_ami.docker_ami.id
   instance_type = "t2.micro"
+  key_name = "ssh_keys"
   vpc_security_group_ids = [aws_security_group.app_firewall.id]
   tags = {
       Name = "amongustodo-api"
   }
-}
-
-output "instance_ips" {
-  value = [aws_instance.app_server.public_ip]
-}
-
-output "instace_ids" {
-  value = [aws_instance.app_server.id]
 }
