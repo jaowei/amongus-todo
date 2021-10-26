@@ -57,7 +57,6 @@ resource "aws_security_group_rule" "egress_rule" {
 resource "aws_instance" "app_server" {
   ami = data.aws_ami.docker_ami.id
   instance_type = "t2.micro"
-  key_name = "ssh_keys"
   vpc_security_group_ids = [aws_security_group.app_firewall.id]
   tags = {
       Name = "amongustodo-api"
