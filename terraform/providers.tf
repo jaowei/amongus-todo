@@ -1,5 +1,11 @@
 terraform {
-  required_version = "= 1.0.5"
+  backend "remote" {
+    organization = "powerx"
+    workspaces {
+      name = "amongus-todo"
+    }
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
