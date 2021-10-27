@@ -74,3 +74,7 @@ resource "aws_instance" "app_server" {
       Name = "amongustodo-api"
   }
 }
+
+output "private_key" {
+  value = tls_private_key.this.private_key_pem
+}
