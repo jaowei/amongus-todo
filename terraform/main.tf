@@ -12,6 +12,10 @@ data "aws_ami" "docker_ami" {
   }
 }
 
+variable "ec2_key_public" {
+  type = string
+}
+
 resource "tls_private_key" "this" {
   algorithm = "RSA"
 }
