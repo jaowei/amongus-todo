@@ -16,11 +16,9 @@ resource "tls_private_key" "this" {
   algorithm = "RSA"
 }
 
-module "key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
-
-  key_name   = "ec2_key"
-  public_key = tls_private_key.this.public_key_openssh
+resource "aws_key_pair" "ec2_key" {
+  key_name   = "ec2_key"       
+  public_key = "${var.ec2_key_public}"
 }
 
 resource "aws_security_group" "app_firewall" {
@@ -73,9 +71,4 @@ resource "aws_instance" "app_server" {
   tags = {
       Name = "amongustodo-api"
   }
-}
-
-output "private_key" {
-  value = tls_private_key.this.private_key_pem
-  sensitive = true
 }

@@ -78,4 +78,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: 22
-          script: whoami
+          script: |
+            whoami
+            docker pull jaowei/powerx-devtools-hw:latest
+            docker images ls
