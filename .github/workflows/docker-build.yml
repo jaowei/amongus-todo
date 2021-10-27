@@ -71,7 +71,7 @@ jobs:
         uses: actions/checkout@v2
         name: Checkout
       -
-        name: install SSH key
+        name: Pull docker image and run container
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.HOST}}
@@ -81,4 +81,4 @@ jobs:
           script: |
             whoami
             docker pull jaowei/powerx-devtools-hw:latest
-            docker images ls
+            docker run -d --restart always -p 80:3000 jaowei/powerx-devtools-hw:latest
