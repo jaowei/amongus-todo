@@ -79,6 +79,5 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            whoami
             docker pull jaowei/powerx-devtools-hw:latest
             docker run -d --restart always -p 80:3000 jaowei/powerx-devtools-hw:latest
