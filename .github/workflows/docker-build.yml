@@ -65,6 +65,7 @@ jobs:
           tags: jaowei/powerx-devtools-hw:latest
   
   ssh-into-EC2:
+    needs: [run-tests, docker]
     runs-on: ubuntu-latest
     steps:
       -
