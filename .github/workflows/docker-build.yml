@@ -82,4 +82,6 @@ jobs:
           port: 22
           script: |
             docker pull jaowei/powerx-devtools-hw:latest
-            docker run -d --restart always -p 80:3000 jaowei/powerx-devtools-hw:latest
+            docker stop my-container
+            docker rm my-container
+            docker run -d --name=my-container --restart always -p 80:3000 jaowei/powerx-devtools-hw:latest
