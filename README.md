@@ -1,3 +1,14 @@
+# How to run CI/CD workflow
+
+1. Change anything in the files and push to this repo. 
+2. Ensure that Terraform creates the resources in AWS, if not run will fail. Actions are linked to Terraform Cloud, and will automatically create resources on push to this repo. Ensure that plan is applied in Terraform Cloud before proceeding.
+3. App is dockerized pushed to Docker Hub
+4. Once Actions has completed, SSH into EC2 instance to check if container has been pulled.
+
+```
+ssh -i /path/my-key-pair.pem my-instance-user-name@my-instance-public-dns-name
+```
+
 # Among Us TODOs API
 
 ![Among Us banner](docs/img/banner.jpg)
