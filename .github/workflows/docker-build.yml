@@ -64,24 +64,17 @@ jobs:
           context: .
           push: true
           tags: jaowei/powerx-devtools-hw:latest
-  
-  ssh-into-EC2:
-    needs: [run-tests, docker]
+
+  heroku:
+    needs: [run-tests]
     runs-on: ubuntu-latest
     steps:
-      -
-        uses: actions/checkout@v2
-        name: Checkout
-      -
-        name: Pull docker image and run container
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{secrets.HOST}}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: 22
-          script: |
-            docker pull jaowei/powerx-devtools-hw:latest
-            docker stop powerx-devtools-hw
-            docker rm powerx-devtools-hw
-            docker run -d --restart always -p 80:3000 jaowei/powerx-devtools-hw:latest
+    -
+      uses: actions/checkout@v2
+    -
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "powerx-devtools-amongus-todo-jaowei" 
+        heroku_email: "jaowei.8@gmail.com"
+        usedocker: true
