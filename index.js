@@ -5,3 +5,5 @@ server.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log('UP AND RUNNING @', port);
 });
+
+console.log('hello')
